@@ -189,7 +189,7 @@ int SSTF(struct data * head)
     struct data *temp = head;
     temp=insert(&temp);
     int sum=0;
-    
+
 
     while(temp!=NULL){
     if(temp->next==NULL && temp->prev==NULL)
