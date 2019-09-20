@@ -8,23 +8,26 @@ struct data
     struct data * next;
 };
 
-int size,start;
+int size,start,maxC;
 
 void sort(struct data*);
 void add(struct data**, int value);
 struct data* insert(struct data **);
 void delete(struct data **,struct data *);
+struct data* copy(struct data *);
 
 int FCFS(struct data*);
 int SSTF(struct data*);
 //int SCAN(struct data*);
 //int CSCAN(struct data*);
-//int LOOK(struct data*);
+int LOOK(struct data*);
 //int CLOOK(struct data*);
 
 
 int main()
 {
+    printf("Enter the total number of cylinders");
+    scanf("%d",&maxC);
     printf("Enter the starting position of disk head:");
     scanf("%d",&start);
     printf("Enter the size of the list:");
@@ -39,40 +42,45 @@ int main()
         scanf("%d",&value);
         add(&head,value);
     }
-
-    printf("FCFS=%d",FCFS(head));
-
+    
+    struct data * fcfs = copy(head);
+    printf("FCFS=%d",FCFS(fcfs));
+    
+    /*for(i=0;i<size;i++)
+    {
+        printf("%d ",fcfs->cylinder);
+        fcfs=fcfs->next;
+        
+    }*/
     sort(head);
     printf("\n");
-    printf("SSTF=%d",SSTF(head));
-    /*insert(&head);
-
-    struct data * temp = head;
-    while(temp!=NULL)
-    {
-        printf("%d ",temp->cylinder);
-        temp=temp->next;
-    }
-    temp = head;
-    temp= temp->next;
-    temp= temp->next;
-    temp= temp->next;
-    temp= temp->next;
-    temp= temp->next;
-    delete(&head, temp);
-
-    printf("\n\n");
-    temp=head;
-    while(temp!=NULL)
-    {
-        printf("%d ",temp->cylinder);
-        temp=temp->next;
-    }*/
-
+    
+    
+    struct data * sstf = copy(head);
+    printf("SSTF=%d",SSTF(sstf));
+    printf("\n");
+    
+    struct data * look = copy(head);
+    printf("LOOK=%d",LOOK(look));
+    printf("\n");
+    
+    
     return 0;
 }
 
 
+struct data* copy(struct data *head)
+{
+    struct data * new = NULL, *temp =head;
+    int i;
+
+    for(i=0;i<size;i++)
+    {
+        add(&new,temp->cylinder);
+        temp=temp->next;
+    }
+    return new;
+}
 void add(struct data ** head, int val)
 {
     struct data* new_node = (struct data*)malloc(sizeof(struct data));
@@ -189,7 +197,7 @@ int SSTF(struct data * head)
     struct data *temp = head;
     temp=insert(&temp);
     int sum=0;
-
+    
 
     while(temp!=NULL){
     if(temp->next==NULL && temp->prev==NULL)
@@ -208,6 +216,34 @@ int SSTF(struct data * head)
         temp=temp->prev;
         delete(&head,temp->next);
     }
+    }
+    return sum;
+}
+
+int LOOK(struct data * head)
+{
+    struct data *temp = head;
+    temp=insert(&temp);
+    int sum=0;
+    
+    while(temp!=NULL)
+    {
+        if(temp->next==NULL && temp->prev==NULL)
+        {
+            return sum;
+        }
+        else if(temp->prev!=NULL)
+        {
+            temp=temp->prev;
+            sum+=abs(temp->cylinder - temp->next->cylinder);
+            delete(&head,temp->next);
+        }
+        else
+        {
+            sum+=abs(temp->cylinder - temp->next->cylinder);
+            temp=temp->next;
+            delete(&head,temp->prev);
+        }
     }
     return sum;
 }
