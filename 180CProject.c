@@ -186,12 +186,19 @@ int FCFS(struct data * head)
 
 int SSTF(struct data * head)
 {
-    struct data *temp = insert(&head);
+    struct data *temp = head;
+    temp=insert(&temp);
     int sum=0;
+    
 
-    if((temp->prev==NULL) || (abs(temp->cylinder - temp->next->cylinder) < abs(temp->cylinder - temp->prev->cylinder)))
+    while(temp!=NULL){
+    if(temp->next==NULL && temp->prev==NULL)
     {
-        sum+=temp->cylinder - temp->next->cylinder;
+        return sum;
+    }
+    else if((temp->prev==NULL) || (abs(temp->cylinder - temp->next->cylinder) < abs(temp->cylinder - temp->prev->cylinder)))
+    {
+        sum+=abs(temp->cylinder - temp->next->cylinder);
         temp=temp->next;
         delete(&head,temp->prev);
     }
@@ -200,6 +207,7 @@ int SSTF(struct data * head)
         sum+=abs(temp->cylinder - temp->prev->cylinder);
         temp=temp->prev;
         delete(&head,temp->next);
+    }
     }
     return sum;
 }
