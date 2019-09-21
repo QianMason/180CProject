@@ -42,29 +42,29 @@ int main()
         scanf("%d",&value);
         add(&head,value);
     }
-    
+
     struct data * fcfs = copy(head);
     printf("FCFS=%d",FCFS(fcfs));
-    
+
     /*for(i=0;i<size;i++)
     {
         printf("%d ",fcfs->cylinder);
         fcfs=fcfs->next;
-        
+
     }*/
     sort(head);
     printf("\n");
-    
-    
+
+
     struct data * sstf = copy(head);
     printf("SSTF=%d",SSTF(sstf));
     printf("\n");
-    
+
     struct data * look = copy(head);
     printf("LOOK=%d",LOOK(look));
     printf("\n");
-    
-    
+
+
     return 0;
 }
 
@@ -197,7 +197,7 @@ int SSTF(struct data * head)
     struct data *temp = head;
     temp=insert(&temp);
     int sum=0;
-    
+
 
     while(temp!=NULL){
     if(temp->next==NULL && temp->prev==NULL)
@@ -225,7 +225,7 @@ int LOOK(struct data * head)
     struct data *temp = head;
     temp=insert(&temp);
     int sum=0;
-    
+
     while(temp!=NULL)
     {
         if(temp->next==NULL && temp->prev==NULL)
@@ -247,3 +247,4 @@ int LOOK(struct data * head)
     }
     return sum;
 }
+
