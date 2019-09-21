@@ -21,7 +21,7 @@ int SSTF(struct data*);
 //int SCAN(struct data*);
 //int CSCAN(struct data*);
 int LOOK(struct data*);
-//int CLOOK(struct data*);
+int CLOOK(struct data*);
 
 
 int main()
@@ -64,6 +64,9 @@ int main()
     printf("LOOK=%d",LOOK(look));
     printf("\n");
     
+    struct data * clook = copy(head);
+    printf("CLOOK=%d",CLOOK(clook));
+    printf("\n");
     
     return 0;
 }
@@ -242,6 +245,35 @@ int LOOK(struct data * head)
         {
             sum+=abs(temp->cylinder - temp->next->cylinder);
             temp=temp->next;
+            delete(&head,temp->prev);
+        }
+    }
+    return sum;
+}
+
+int CLOOK(struct data* head)
+{
+    struct data* temp = head;
+    temp=insert(&temp);
+    int sum=0;
+    
+    while(temp!=NULL)
+    {
+        if(temp->next==NULL && temp->prev==NULL)
+        {
+            return sum;
+        }
+        else if(temp->next==NULL)
+        {
+            temp=temp->prev;
+            delete(&head,temp->next);
+            while(temp->prev!=NULL)
+                temp=temp->prev;    
+        }
+        else
+        {
+            temp=temp->next;
+            sum+=abs(temp->cylinder - temp->prev->cylinder);
             delete(&head,temp->prev);
         }
     }
