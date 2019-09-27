@@ -44,7 +44,7 @@ int SSTF(struct data * head)
 int LOOK(struct data * head)
 {
     struct data *temp = head;
-    temp=insert(&temp);
+    temp=insert(&temp,start);
     int sum=0;
 
     while(temp!=NULL)
@@ -72,7 +72,7 @@ int LOOK(struct data * head)
 int CLOOK(struct data* head)
 {
     struct data* temp = head;
-    temp=insert(&temp);
+    temp=insert(&temp,start);
     int sum=0;
 
     while(temp!=NULL)

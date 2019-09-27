@@ -42,37 +42,37 @@ int main()
         scanf("%d",&value);
         add(&head,value);
     }
-    
+
     struct data * fcfs = copy(head);
     printf("FCFS=%d",FCFS(fcfs));
 
-    
+
     sort(head);
     printf("\n");
-    
-    
+
+
     struct data * sstf = copy(head);
     printf("SSTF=%d",SSTF(sstf));
     printf("\n");
-    
-    
-    
+
+
+
     struct data * scan = copy(head);
     printf("SCAN=%d",SCAN(scan));
     printf("\n");
-    
+
     struct data * cscan = copy(head);
     printf("CSCAN=%d",CSCAN(cscan));
     printf("\n");
-    
+
     struct data * look = copy(head);
     printf("LOOK=%d",LOOK(look));
     printf("\n");
-    
+
     struct data * clook = copy(head);
     printf("CLOOK=%d",CLOOK(clook));
     printf("\n");
-    
+
     return 0;
 }
 
@@ -203,13 +203,13 @@ int FCFS(struct data * head)
 
 int SSTF(struct data * head)
 {
-    
+
     struct data *temp = head;
     temp=insert(&temp,start);
-    
+
     int sum=0;
-    
-    
+
+
 
     while(temp!=NULL){
     if(temp->next==NULL && temp->prev==NULL)
@@ -243,12 +243,12 @@ int SSTF(struct data * head)
 int SCAN(struct data* head)
 {
     struct data *temp = head,*t;
-    
+
     t=insert(&temp,0);
     temp=insert(&temp,start);
-    
+
     int sum=0;
-    
+
     while(temp!=NULL)
     {
         if(temp->next==NULL && temp->prev==NULL)
@@ -267,7 +267,7 @@ int SCAN(struct data* head)
             temp=temp->next;
             delete(&head,temp->prev);
         }
-        
+
     }
     return sum;
 }
@@ -275,10 +275,10 @@ int SCAN(struct data* head)
 int CSCAN(struct data* head)
 {
     struct data* temp = head,*d;
-    
+
     temp=insert(&temp,start);
     int sum=0;
-    
+
     while(temp!=NULL)
     {
         if(temp->next==NULL && temp->prev==NULL)
@@ -290,7 +290,7 @@ int CSCAN(struct data* head)
             sum+=abs(temp->cylinder - maxC);
             d=temp;
             while(temp->prev!=NULL)
-            {  
+            {
                 temp=temp->prev;
             }
             delete(&head,d);
@@ -311,24 +311,46 @@ int LOOK(struct data * head)
     struct data *temp = head;
     temp=insert(&temp,start);
     int sum=0;
-    
-    while(temp!=NULL)
-    {
-        if(temp->next==NULL && temp->prev==NULL)
+    if (maxC - temp->cylinder < temp->cylinder) {
+        while(temp!=NULL)
         {
-            return sum;
+            if(temp->next==NULL && temp->prev==NULL)
+            {
+                return sum;
+            }
+            else if(temp->prev!=NULL && temp->next == NULL)
+            {
+                temp=temp->prev;
+                sum+=abs(temp->cylinder - temp->next->cylinder);
+                delete(&head,temp->next);
+            }
+            else
+            {
+                sum+=abs(temp->cylinder - temp->next->cylinder);
+                temp=temp->next;
+                delete(&head,temp->prev);
+            }
         }
-        else if(temp->prev!=NULL)
+    }
+    else {
+        while(temp!=NULL)
         {
-            temp=temp->prev;
-            sum+=abs(temp->cylinder - temp->next->cylinder);
-            delete(&head,temp->next);
-        }
-        else
-        {
-            sum+=abs(temp->cylinder - temp->next->cylinder);
-            temp=temp->next;
-            delete(&head,temp->prev);
+            if(temp->next==NULL && temp->prev==NULL)
+            {
+                return sum;
+            }
+            else if(temp->next!=NULL && temp->prev == NULL)
+            {
+                temp=temp->next;
+                sum+=abs(temp->cylinder - temp->prev->cylinder);
+                delete(&head,temp->prev);
+            }
+            else
+            {
+                sum+=abs(temp->cylinder - temp->prev->cylinder);
+                temp=temp->prev;
+                delete(&head,temp->next);
+            }
         }
     }
     return sum;
@@ -339,26 +361,51 @@ int CLOOK(struct data* head)
     struct data* temp = head;
     temp=insert(&temp,start);
     int sum=0;
-    
-    while(temp!=NULL)
-    {
-        if(temp->next==NULL && temp->prev==NULL)
+
+    if (maxC - temp->cylinder < temp->cylinder) {
+        while(temp!=NULL)
         {
-            return sum;
+            if(temp->next==NULL && temp->prev==NULL)
+            {
+                return sum;
+            }
+            else if(temp->next==NULL)
+            {
+                temp=temp->prev;
+                //sum+=abs(temp->cylinder - temp->next->cylinder);
+                delete(&head,temp->next);
+                while(temp->prev!=NULL)
+                    temp=temp->prev;
+            }
+            else
+            {
+                temp=temp->next;
+                sum+=abs(temp->cylinder - temp->prev->cylinder);
+                delete(&head,temp->prev);
+            }
         }
-        else if(temp->next==NULL)
+    }
+    else {
+        while (temp!=NULL)
         {
-            temp=temp->prev;
-            sum+=abs(temp->cylinder - temp->next->cylinder);
-            delete(&head,temp->next);
-            while(temp->prev!=NULL)
-                temp=temp->prev;    
-        }
-        else
-        {
-            temp=temp->next;
-            sum+=abs(temp->cylinder - temp->prev->cylinder);
-            delete(&head,temp->prev);
+            if(temp->next==NULL && temp->prev==NULL)
+            {
+                return sum;
+            }
+            else if(temp->prev==NULL)
+            {
+                temp=temp->next;
+                //sum+=abs(temp->cylinder - temp->prev->cylinder);
+                delete(&head,temp->prev);
+                while(temp->next!=NULL)
+                    temp=temp->next;
+            }
+            else
+            {
+                temp=temp->prev;
+                sum+=abs(temp->cylinder - temp->next->cylinder);
+                delete(&head,temp->next);
+            }
         }
     }
     return sum;
