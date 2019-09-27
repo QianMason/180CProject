@@ -203,9 +203,12 @@ int FCFS(struct data * head)
 
 int SSTF(struct data * head)
 {
+    
     struct data *temp = head;
     temp=insert(&temp,start);
+    
     int sum=0;
+    
     
 
     while(temp!=NULL){
@@ -213,7 +216,13 @@ int SSTF(struct data * head)
     {
         return sum;
     }
-    else if((temp->prev==NULL) || (abs(temp->cylinder - temp->next->cylinder) < abs(temp->cylinder - temp->prev->cylinder)))
+    else if(temp->next==NULL)
+    {
+        sum+=abs(temp->cylinder - temp->prev->cylinder);
+        temp=temp->prev;
+        delete(&head,temp->next);
+    }
+    else if( (abs(temp->cylinder - temp->next->cylinder) < abs(temp->cylinder - temp->prev->cylinder)))
     {
         sum+=abs(temp->cylinder - temp->next->cylinder);
         temp=temp->next;
@@ -226,6 +235,8 @@ int SSTF(struct data * head)
         delete(&head,temp->next);
     }
     }
+    printf("A");
+    fflush(stdout);
     return sum;
 }
 
@@ -338,6 +349,7 @@ int CLOOK(struct data* head)
         else if(temp->next==NULL)
         {
             temp=temp->prev;
+            sum+=abs(temp->cylinder - temp->next->cylinder);
             delete(&head,temp->next);
             while(temp->prev!=NULL)
                 temp=temp->prev;    
