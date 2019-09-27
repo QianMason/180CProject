@@ -19,14 +19,14 @@ struct data* copy(struct data *);
 int FCFS(struct data*);
 int SSTF(struct data*);
 int SCAN(struct data*);
-//int CSCAN(struct data*);
+int CSCAN(struct data*);
 int LOOK(struct data*);
 int CLOOK(struct data*);
 
 
 int main()
 {
-    printf("Enter the total number of cylinders");
+    printf("Enter the total number of cylinders:");
     scanf("%d",&maxC);
     printf("Enter the starting position of disk head:");
     scanf("%d",&start);
@@ -59,6 +59,10 @@ int main()
     
     struct data * scan = copy(head);
     printf("SCAN=%d",SCAN(scan));
+    printf("\n");
+    
+    struct data * cscan = copy(head);
+    printf("CSCAN=%d",CSCAN(cscan));
     printf("\n");
     
     struct data * look = copy(head);
@@ -253,6 +257,40 @@ int SCAN(struct data* head)
             delete(&head,temp->prev);
         }
         
+    }
+    return sum;
+}
+
+int CSCAN(struct data* head)
+{
+    struct data* temp = head,*d;
+    
+    temp=insert(&temp,start);
+    int sum=0;
+    
+    while(temp!=NULL)
+    {
+        if(temp->next==NULL && temp->prev==NULL)
+        {
+            return sum;
+        }
+        else if(temp->next==NULL)
+        {
+            sum+=abs(temp->cylinder - maxC);
+            d=temp;
+            while(temp->prev!=NULL)
+            {  
+                temp=temp->prev;
+            }
+            delete(&head,d);
+            sum+=temp->cylinder;
+        }
+        else
+        {
+            temp=temp->next;
+            sum+=abs(temp->cylinder - temp->prev->cylinder);
+            delete(&head,temp->prev);
+        }
     }
     return sum;
 }
