@@ -234,8 +234,6 @@ int SSTF(struct data * head)
             delete(&head,temp->next);
         }
     }
-    printf("A");
-    fflush(stdout);
     return sum;
 }
 

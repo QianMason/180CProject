@@ -1,4 +1,5 @@
 #ifndef PROJECT_H
+#define PROJECT_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,7 +11,7 @@ struct data //list implementation
     struct data * next;
 };
 
-int size,start;
+int size,start,maxC;
 
 void sort(struct data*);
 void add(struct data**, int value);
@@ -20,9 +21,10 @@ struct data* copy(struct data *head);
 
 int FCFS(struct data*);
 int SSTF(struct data*);
-//int SCAN(struct data*);
-//int CSCAN(struct data*);
+int SCAN(struct data*);
+int CSCAN(struct data*);
 int LOOK(struct data*);
 int CLOOK(struct data*);
 
 #endif
+
