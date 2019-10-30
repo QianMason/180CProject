@@ -2,7 +2,7 @@
 
 int FCFS(struct data * head)
 {
-    FILE *fcfsfile = fopen("fcfs.txt", "a");
+    FILE *fcfsfile = fopen("fcfs.csv", "a");
     //fseek(fcfsfile, 0, SEEK_END);
     //fprintf(fcfsfile, "New Run:\n\n");
     struct data * temp = head;
@@ -22,7 +22,7 @@ int FCFS(struct data * head)
 
 int SSTF(struct data * head)
 {
-    FILE *sstffile = fopen("sstf.txt", "a");
+    FILE *sstffile = fopen("sstf.csv", "a");
     //fprintf(sstffile, "New Run:\n\n");
     struct data *temp = head;
     temp=insert(&temp,start);
@@ -66,7 +66,7 @@ int SSTF(struct data * head)
 
 int LOOK(struct data * head)
 {
-    FILE *lookfile = fopen("look.txt", "a");
+    FILE *lookfile = fopen("look.csv", "a");
     //fprintf(lookfile, "New Run:\n\n");
     struct data *temp = head;
     temp=insert(&temp,start);
@@ -128,7 +128,7 @@ int LOOK(struct data * head)
 
 int CLOOK(struct data* head)
 {
-    FILE *clookfile = fopen("clook.txt", "a");
+    FILE *clookfile = fopen("clook.csv", "a");
     //fprintf(clookfile, "New Run:\n\n");
     struct data* temp = head;
     temp=insert(&temp,start);
@@ -195,7 +195,7 @@ int CLOOK(struct data* head)
 
 int SCAN(struct data* head)
 {
-    FILE *scanfile = fopen("scan.txt", "a");
+    FILE *scanfile = fopen("scan.csv", "a");
     //fprintf(scanfile, "New Run:\n\n");
     struct data *temp = head,*t;
 
@@ -265,7 +265,7 @@ int SCAN(struct data* head)
 
 int CSCAN(struct data* head)
 {
-    FILE *cscanfile = fopen("cscan.txt", "a");
+    FILE *cscanfile = fopen("cscan.csv", "a");
     //fprintf(cscanfile, "New Run:\n\n");
     struct data* temp = head,*d;
 
