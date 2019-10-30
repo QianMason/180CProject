@@ -4,18 +4,18 @@ int FCFS(struct data * head)
 {
     FILE *fcfsfile = fopen("fcfs.txt", "a");
     //fseek(fcfsfile, 0, SEEK_END);
-    fprintf(fcfsfile, "New Run:\n\n");
+    //fprintf(fcfsfile, "New Run:\n\n");
     struct data * temp = head;
     int sum = abs(start-(head->cylinder));
-    fprintf(fcfsfile, "%d\n", start);
+    fprintf(fcfsfile, "%d,", start);
     while(temp->next!=NULL)
     {
-        fprintf(fcfsfile, "%d\n", temp->cylinder);
+        fprintf(fcfsfile, "%d,", temp->cylinder);
         sum+=abs((temp->cylinder)-(temp->next->cylinder));
         temp=temp->next;
     }
-    fprintf(fcfsfile, "%d\n", temp->cylinder);
-    fprintf(fcfsfile, "\n");
+    fprintf(fcfsfile, "%d", temp->cylinder);
+    //fprintf(fcfsfile, "\n");
     fclose(fcfsfile);
     return sum;
 }
@@ -23,7 +23,7 @@ int FCFS(struct data * head)
 int SSTF(struct data * head)
 {
     FILE *sstffile = fopen("sstf.txt", "a");
-    fprintf(sstffile, "New Run:\n\n");
+    //fprintf(sstffile, "New Run:\n\n");
     struct data *temp = head;
     temp=insert(&temp,start);
 
@@ -33,33 +33,33 @@ int SSTF(struct data * head)
     {
         if(temp->next==NULL && temp->prev==NULL)
         {
-            fprintf(sstffile, "%d\n\n", temp->cylinder);
+            fprintf(sstffile, "%d", temp->cylinder);
             fclose(sstffile);
             return sum;
         }
         else if(temp->next==NULL)
         {
-            fprintf(sstffile, "%d\n", temp->cylinder);
+            fprintf(sstffile, "%d,", temp->cylinder);
             sum+=abs(temp->cylinder - temp->prev->cylinder);
             temp=temp->prev;
             delete(&head,temp->next);
         }
         else if( (temp->prev==NULL) || (abs(temp->cylinder - temp->next->cylinder) < abs(temp->cylinder - temp->prev->cylinder)))
         {
-            fprintf(sstffile, "%d\n", temp->cylinder);
+            fprintf(sstffile, "%d,", temp->cylinder);
             sum+=abs(temp->cylinder - temp->next->cylinder);
             temp=temp->next;
             delete(&head,temp->prev);
         }
         else
         {
-            fprintf(sstffile, "%d\n", temp->cylinder);
+            fprintf(sstffile, "%d,", temp->cylinder);
             sum+=abs(temp->cylinder - temp->prev->cylinder);
             temp=temp->prev;
             delete(&head,temp->next);
         }
     }
-    fprintf(sstffile, "\n");
+    //fprintf(sstffile, "\n");
     fclose(sstffile);
     return sum;
 }
@@ -67,7 +67,7 @@ int SSTF(struct data * head)
 int LOOK(struct data * head)
 {
     FILE *lookfile = fopen("look.txt", "a");
-    fprintf(lookfile, "New Run:\n\n");
+    //fprintf(lookfile, "New Run:\n\n");
     struct data *temp = head;
     temp=insert(&temp,start);
     int sum=0;
@@ -76,20 +76,20 @@ int LOOK(struct data * head)
         {
             if(temp->next==NULL && temp->prev==NULL)
             {
-                fprintf(lookfile, "%d\n\n", temp->cylinder);
+                fprintf(lookfile, "%d", temp->cylinder);
                 fclose(lookfile);
                 return sum;
             }
             else if(temp->prev!=NULL && temp->next == NULL)
             {
-                fprintf(lookfile, "%d\n", temp->cylinder);
+                fprintf(lookfile, "%d,", temp->cylinder);
                 temp=temp->prev;
                 sum+=abs(temp->cylinder - temp->next->cylinder);
                 delete(&head,temp->next);
             }
             else
             {
-                fprintf(lookfile, "%d\n", temp->cylinder);
+                fprintf(lookfile, "%d,", temp->cylinder);
                 sum+=abs(temp->cylinder - temp->next->cylinder);
                 temp=temp->next;
                 delete(&head,temp->prev);
@@ -101,27 +101,27 @@ int LOOK(struct data * head)
         {
             if(temp->next==NULL && temp->prev==NULL)
             {
-                fprintf(lookfile, "%d\n\n", temp->cylinder);
+                fprintf(lookfile, "%d", temp->cylinder);
                 fclose(lookfile);
                 return sum;
             }
             else if(temp->next!=NULL && temp->prev == NULL)
             {
-                fprintf(lookfile, "%d\n", temp->cylinder);
+                fprintf(lookfile, "%d,", temp->cylinder);
                 temp=temp->next;
                 sum+=abs(temp->cylinder - temp->prev->cylinder);
                 delete(&head,temp->prev);
             }
             else
             {
-                fprintf(lookfile, "%d\n", temp->cylinder);
+                fprintf(lookfile, "%d,", temp->cylinder);
                 sum+=abs(temp->cylinder - temp->prev->cylinder);
                 temp=temp->prev;
                 delete(&head,temp->next);
             }
         }
     }
-    fprintf(lookfile, "\n");
+    //fprintf(lookfile, "\n");
     fclose(lookfile);
     return sum;
 }
@@ -129,7 +129,7 @@ int LOOK(struct data * head)
 int CLOOK(struct data* head)
 {
     FILE *clookfile = fopen("clook.txt", "a");
-    fprintf(clookfile, "New Run:\n\n");
+    //fprintf(clookfile, "New Run:\n\n");
     struct data* temp = head;
     temp=insert(&temp,start);
     int sum=0;
@@ -139,13 +139,13 @@ int CLOOK(struct data* head)
         {
             if(temp->next==NULL && temp->prev==NULL)
             {
-                fprintf(clookfile, "%d\n\n", temp->cylinder);
+                fprintf(clookfile, "%d", temp->cylinder);
                 fclose(clookfile);
                 return sum;
             }
             else if(temp->next==NULL)
             {
-                fprintf(clookfile, "%d\n", temp->cylinder);
+                fprintf(clookfile, "%d,", temp->cylinder);
                 temp=temp->prev;
                 //sum+=abs(temp->cylinder - temp->next->cylinder);
                 delete(&head,temp->next);
@@ -154,7 +154,7 @@ int CLOOK(struct data* head)
             }
             else
             {
-                fprintf(clookfile, "%d\n", temp->cylinder);
+                fprintf(clookfile, "%d,", temp->cylinder);
                 temp=temp->next;
                 sum+=abs(temp->cylinder - temp->prev->cylinder);
                 delete(&head,temp->prev);
@@ -166,13 +166,13 @@ int CLOOK(struct data* head)
         {
             if(temp->next==NULL && temp->prev==NULL)
             {
-                fprintf(clookfile, "%d\n\n", temp->cylinder);
+                fprintf(clookfile, "%d", temp->cylinder);
                 fclose(clookfile);
                 return sum;
             }
             else if(temp->prev==NULL)
             {
-                fprintf(clookfile, "%d\n", temp->cylinder);
+                fprintf(clookfile, "%d,", temp->cylinder);
                 temp=temp->next;
                 //sum+=abs(temp->cylinder - temp->prev->cylinder);
                 delete(&head,temp->prev);
@@ -181,14 +181,14 @@ int CLOOK(struct data* head)
             }
             else
             {
-                fprintf(clookfile, "%d\n", temp->cylinder);
+                fprintf(clookfile, "%d,", temp->cylinder);
                 temp=temp->prev;
                 sum+=abs(temp->cylinder - temp->next->cylinder);
                 delete(&head,temp->next);
             }
         }
     }
-    fprintf(clookfile, "\n");
+    //fprintf(clookfile, "\n");
     fclose(clookfile);
     return sum;
 }
@@ -196,7 +196,7 @@ int CLOOK(struct data* head)
 int SCAN(struct data* head)
 {
     FILE *scanfile = fopen("scan.txt", "a");
-    fprintf(scanfile, "New Run:\n\n");
+    //fprintf(scanfile, "New Run:\n\n");
     struct data *temp = head,*t;
 
 
@@ -211,20 +211,20 @@ int SCAN(struct data* head)
         {
             if(temp->next==NULL && temp->prev==NULL)
             {
-                fprintf(scanfile, "%d\n\n", temp->cylinder);
+                fprintf(scanfile, "%d", temp->cylinder);
                 fclose(scanfile);
                 return sum;
             }
             else if(temp->next==NULL)
             {
-                fprintf(scanfile, "%d\n", temp->cylinder);
+                fprintf(scanfile, "%d,", temp->cylinder);
                 temp=temp->prev;
                 sum+=abs(temp->cylinder - temp->next->cylinder);
                 delete(&head,temp->next);
             }
             else
             {
-                fprintf(scanfile, "%d\n", temp->cylinder);
+                fprintf(scanfile, "%d,", temp->cylinder);
                 sum+=abs(temp->cylinder - temp->next->cylinder);
                 temp=temp->next;
                 delete(&head,temp->prev);
@@ -238,27 +238,27 @@ int SCAN(struct data* head)
         {
             if(temp->next==NULL && temp->prev==NULL)
             {
-                fprintf(scanfile, "%d\n\n", temp->cylinder);
+                fprintf(scanfile, "%d", temp->cylinder);
                 fclose(scanfile);
                 return sum;
             }
             else if(temp->prev==NULL)
             {
-                fprintf(scanfile, "%d\n", temp->cylinder);
+                fprintf(scanfile, "%d,", temp->cylinder);
                 temp=temp->next;
                 sum+=abs(temp->cylinder - temp->prev->cylinder);
                 delete(&head,temp->prev);
             }
             else
             {
-                fprintf(scanfile, "%d\n", temp->cylinder);
+                fprintf(scanfile, "%d,", temp->cylinder);
                 sum+=abs(temp->cylinder - temp->prev->cylinder);
                 temp=temp->prev;
                 delete(&head,temp->next);
             }
         }
     }
-    fprintf(scanfile, "\n");
+    //fprintf(scanfile, "\n");
     fclose(scanfile);
     return sum;
 }
@@ -266,7 +266,7 @@ int SCAN(struct data* head)
 int CSCAN(struct data* head)
 {
     FILE *cscanfile = fopen("cscan.txt", "a");
-    fprintf(cscanfile, "New Run:\n\n");
+    //fprintf(cscanfile, "New Run:\n\n");
     struct data* temp = head,*d;
 
     temp=insert(&temp,start);
@@ -277,13 +277,13 @@ int CSCAN(struct data* head)
         {
             if(temp->next==NULL && temp->prev==NULL)
             {
-                fprintf(cscanfile, "%d\n\n", temp->cylinder);
+                fprintf(cscanfile, "%d", temp->cylinder);
                 fclose(cscanfile);
                 return sum;
             }
             else if(temp->next==NULL)
             {
-                fprintf(cscanfile, "%d\n", temp->cylinder);
+                fprintf(cscanfile, "%d,", temp->cylinder);
                 sum+=abs(temp->cylinder - maxC);
                 d=temp;
                 while(temp->prev!=NULL)
@@ -295,7 +295,7 @@ int CSCAN(struct data* head)
             }
             else
             {
-                fprintf(cscanfile, "%d\n", temp->cylinder);
+                fprintf(cscanfile, "%d,", temp->cylinder);
                 temp=temp->next;
                 sum+=abs(temp->cylinder - temp->prev->cylinder);
                 delete(&head,temp->prev);
@@ -307,13 +307,13 @@ int CSCAN(struct data* head)
         {
             if(temp->next==NULL && temp->prev==NULL)
             {
-                fprintf(cscanfile, "%d\n\n", temp->cylinder);
+                fprintf(cscanfile, "%d", temp->cylinder);
                 fclose(cscanfile);
                 return sum;
             }
             else if(temp->prev==NULL) //evaluates once
             {
-                fprintf(cscanfile, "%d\n", temp->cylinder);
+                fprintf(cscanfile, "%d,", temp->cylinder);
                 sum+=abs(temp->cylinder);
                 d=temp;
                 while(temp->next!=NULL)
@@ -325,14 +325,14 @@ int CSCAN(struct data* head)
             }
             else
             {
-                fprintf(cscanfile, "%d\n", temp->cylinder);
+                fprintf(cscanfile, "%d,", temp->cylinder);
                 temp=temp->prev;
                 sum+=abs(temp->cylinder - temp->next->cylinder);
                 delete(&head,temp->next);
             }
         }
     }
-    fprintf(cscanfile, "\n");
+    //fprintf(cscanfile, "\n");
     fclose(cscanfile);
     return sum;
 }
