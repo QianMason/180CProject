@@ -12,6 +12,12 @@ int main()
 
     int i,value;
     struct data * head = NULL;
+    FILE *fcfsfile = fopen("fcfs.txt", "w");
+    FILE *sstffile = fopen("sstf.txt", "w");
+    FILE *scanfile = fopen("scan.txt", "w");
+    FILE *cscanfile = fopen("cscan.txt", "w");
+    FILE *lookfile = fopen("look.txt", "w");
+    FILE *clookfile = fopen("clook.txt", "w");
 
     for(i=0;i<size;i++)
     {
