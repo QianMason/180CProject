@@ -31,23 +31,20 @@ struct data * insert(struct data ** head, int val)
     if(temp->cylinder>val)
     {
         new_node->next=temp;
+        temp->prev = new_node;
         *head = new_node;
         return new_node;
     }
-    while(temp->next->cylinder<val)
+    while(temp->next != NULL && temp->cylinder<val)
     {
         temp=temp->next;
     }
 
-
     new_node->next = temp->next;
-
 
     temp->next = new_node;
 
-
     new_node->prev = temp;
-
 
     if (new_node->next != NULL)
         new_node->next->prev = new_node;

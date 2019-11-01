@@ -25,10 +25,10 @@ int SSTF(struct data * head)
     FILE *sstffile = fopen("sstf.csv", "a");
     //fprintf(sstffile, "New Run:\n\n");
     struct data *temp = head;
+
     temp=insert(&temp,start);
-
     int sum=0;
-
+    struct data *print = head;
     while(temp!=NULL)
     {
         if(temp->next==NULL && temp->prev==NULL)
@@ -207,6 +207,7 @@ int SCAN(struct data* head)
     if (maxC - temp->cylinder < temp->cylinder)
     {
         t = insert(&head, maxC);
+        printf("while loop 1!!!");
         while(temp!=NULL)
         {
             if(temp->next==NULL && temp->prev==NULL)
