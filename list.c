@@ -35,7 +35,7 @@ struct data * insert(struct data ** head, int val)
         *head = new_node;
         return new_node;
     }
-    while(temp->next != NULL && temp->cylinder<val)
+    while(temp->next != NULL && temp->next->cylinder<val)
     {
         temp=temp->next;
     }

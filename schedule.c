@@ -235,6 +235,9 @@ int SCAN(struct data* head)
     else
     {
         t=insert(&head,0);
+        int counter = 0;
+        printf("while loop 2!");
+        printf("temp = %d\n", temp->cylinder);
         while(temp!=NULL)
         {
             if(temp->next==NULL && temp->prev==NULL)
