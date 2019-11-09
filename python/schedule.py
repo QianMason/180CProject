@@ -257,6 +257,7 @@ def CLOOK(schedule, start, num_cylinder):
 
 def main():
     schedule = []
+    visit = []
     mode = input("Please enter 1 for user interactive mode or 2 for batch mode or any other for default mode:\n")
     if mode != "1" and mode != "2":
         schedule = [98, 183, 37, 122, 14, 124, 65, 67]
@@ -277,11 +278,14 @@ def main():
             create_list(input("Please enter name of file: "), schedule)
 
 
+    print("Disk Queue =")
+    print(schedule)
+    input("")
 
     #FCFS
     fcfsList = schedule.copy()
     fcfsSum = FCFS(fcfsList, start)
-    print("First Come First Serve Algorithm\n")
+    print("First Come First Serve Algorithm")
     print("FCFS =", fcfsSum)
     input("\n")
 
@@ -289,7 +293,7 @@ def main():
     sstfList = schedule.copy()
     sstfList.sort()
     sstfSum = SSTF(sstfList, start)
-    print("Shorest Seek Time First Algorithm")
+    print("Shortest Seek Time First Algorithm")
     print("SSTF =", sstfSum)
     input("\n")
 
